@@ -32,32 +32,22 @@ public abstract class Person implements Human {
         System.out.println("Age: " + age);
     }
 
-    ;
-
     public void sayGender() {
         System.out.println("Gender: " + gender);
     }
-
-    ;
 
     public void sayLocation() {
         System.out.println("Location: " + location);
     }
 
-    ;
-
     public void sayName() {
         System.out.println("Name: " + firstName + " " + lastName);
     }
-
-    ;
 
     @Override
     public void whoIAm() {
         System.out.println("I'm a person");
     }
-
-    ;
 
     @Override
     public String getFullInfo() {
@@ -93,6 +83,10 @@ public abstract class Person implements Human {
         this.lastName = lastName;
     }
 
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
     public Gender getGender() {
         return gender;
     }
@@ -107,5 +101,9 @@ public abstract class Person implements Human {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String toString(){
+        return getFullName();
     }
 }
