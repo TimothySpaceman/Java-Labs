@@ -1,5 +1,6 @@
 package lab2.task1;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Main {
@@ -86,6 +87,9 @@ public class Main {
         checkInstance(mrWise, Person.class);
         checkInstance(mrWise, Human.class);
         checkInstance(mrWise, Student.class);
+
+        System.out.println("");
+        System.out.println("Available locations: " + Arrays.toString(Location.values()).replace("[", "").replace("]", ""));
     }
 
     public static void checkInstance(Object instance, Class<?> of)
