@@ -2,10 +2,14 @@ package lab5;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
-        task1();
+//        task1();
+//        task2();
+        task3();
     }
 
     public static void task1(){
@@ -53,19 +57,53 @@ public class Main {
         System.out.println("==========TASK 2==========");
         ArrayDeque products = new ArrayDeque();
 
+        products.add(new Product("Ролліні з курячим жюльєном", "АТБ", 20.50));
+        products.add(new Product("Ролліні з телятиною", "АТБ", 22.30));
+        products.add(new Product("Сосиска в тісті", "АТБ", 24.20));
+        products.add(new Product("Йогурт персиковий", "Рудь", 20.70));
+
+        printArrayDeque("Products", products);
+        System.out.println("First product: " + products.peek());
 
         System.out.println();
     }
 
-    public static void printArrayDeque(String title, ArrayDeque deque) {
+    public static void printArrayDeque(String title, ArrayDeque source) {
         System.out.println("[" + title + "]:");
-//        list.forEach(product->{
-//            System.out.println("\t" + product);
-//        });
+        ArrayDeque deque = source.clone();
 
-        for(int i = 0; i < list.size(); i += 1) {
-            System.out.println("\t" + list.get(i));
+        while(!deque.isEmpty()) {
+            System.out.println("\t" + deque.pop());
         }
+        System.out.println();
+    }
+
+    public static void task3(){
+        System.out.println("==========TASK 3==========");
+        TreeSet<Product> products = new TreeSet<Product>();
+
+        products.add(new Product("Ролліні з курячим жюльєном", "АТБ", 20.50));
+        products.add(new Product("Ролліні з телятиною", "АТБ", 22.30));
+        products.add(new Product("Сосиска в тісті", "АТБ", 24.20));
+        products.add(new Product("Йогурт персиковий", "Рудь", 20.70));
+
+        printTreeSet("Products", products);
+        printTreeSet("Products ceiling: ", products.subSet());
+//        System.out.println("First product: " + products.peek());
+
+        System.out.println();
+    }
+
+    public static void printTreeSet(String title, TreeSet source) {
+        System.out.println("[" + title + "]:");
+
+        TreeSet set = (TreeSet) source.clone();
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext())
+        {
+            System.out.println("\t" + iterator.next());
+        }
+
         System.out.println();
     }
 }

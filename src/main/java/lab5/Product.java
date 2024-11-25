@@ -2,7 +2,7 @@ package lab5;
 
 import java.text.DecimalFormat;
 
-public class Product {
+public class Product implements Comparable<Product> {
     private String title;
     private String manufacturer;
     private double price;
@@ -41,5 +41,10 @@ public class Product {
     public String toString() {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         return String.format("%s (%s) - %s₴", this.title, this.manufacturer, decimalFormat.format(this.price));
+    }
+
+    @Override
+    public int compareTo(Product opponent) {
+        return (int)(this.getPrice()*100 - opponent.getPrice()*100);
     }
 }
