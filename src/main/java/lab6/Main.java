@@ -5,10 +5,7 @@ import lab4.CartItem;
 import lab6.exceptions.WrongLoginException;
 import lab6.exceptions.WrongPasswordException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.util.Date;
@@ -18,7 +15,8 @@ import java.util.regex.*;
 public class Main {
     public static void main(String[] args) {
 //        task1();
-        task2();
+//        task2();
+        task3();
     }
 
     public static void task1(){
@@ -113,5 +111,12 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void task3(){
+        System.out.println("==========TASK 3==========");
+        CopyPaster cp = new CopyPaster("sticker.webp");
+        cp.copyTo("sticker-copy.webp");
+        System.out.println();
     }
 }
