@@ -1,14 +1,37 @@
 package lab6;
 
+import lab4.Cart;
+import lab4.CartItem;
 import lab6.exceptions.WrongLoginException;
 import lab6.exceptions.WrongPasswordException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.*;
 
 public class Main {
     public static void main(String[] args) {
-        Boolean result = checkCredentials("abc", "a", "a");
-        System.out.println(result);
+//        task1();
+        task2();
+    }
+
+    public static void task1(){
+        System.out.println("==========TASK 1==========");
+        String login = "abc";
+        String password = "abc";
+        String confirmPassword = "abc";
+        Boolean result = checkCredentials(login, password, confirmPassword);
+        System.out.println("Login: " + login);
+        System.out.println("Password: " + password);
+        System.out.println("Confirm Password: " + confirmPassword);
+        System.out.println("Result: " + result);
+        System.out.println();
     }
 
     public static boolean checkCredentials(String login, String password, String checkPassword) {
@@ -44,6 +67,51 @@ public class Main {
         matcher.find();
         if(!matcher.hasMatch()){
             throw exception;
+        }
+    }
+
+    public static void task2(){
+        System.out.println("==========TASK 2==========");
+        Cart cart = new Cart(new Date());
+        cart.add(new CartItem("Zoom Call Background of a Clean Room", "Home Office Essentials", 299.99))
+                .add(new CartItem("Coffee IV Drip", "Stay Awake Gear", 799.49))
+                .add(new CartItem("Pet Translator for Video Calls", "Pet Management", 499.90))
+                .add(new CartItem("Noise-Canceling Headphones for Kids' Screams", "Noise Control", 1099.75))
+                .add(new CartItem("Professional Pajama Set", "Work-From-Bed Apparel", 89.99))
+                .add(new CartItem("Snack Delivery Robot", "Desk Snacks", 4999.00))
+                .add(new CartItem("Auto-Mute Button for Embarrassing Sounds", "Meeting Savers", 199.99))
+                .add(new CartItem("Desk Plant that Never Dies", "Mood Boosters", 149.50))
+                .add(new CartItem("Motivational Poster: 'You're Still on Mute!'", "Office Decor", 19.99))
+                .add(new CartItem("Virtual High-Five Machine", "Team Bonding", 99.49));
+        writeCartToFile(cart);
+        readCartFromFile();
+        System.out.println();
+    }
+
+    public static void writeCartToFile(Cart cart) {
+        try {
+            FileWriter fw = new FileWriter("report.cart");
+            fw.write(cart.toFormattedString(new Locale("en", "US")));
+            fw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void readCartFromFile() {
+        try {
+            FileReader fr = new FileReader("report.cart");
+            StringBuilder builder = new StringBuilder();
+            int nextChar;
+            while ((nextChar = fr.read()) != -1) {
+                builder.append((char) nextChar);
+            }
+            String output = builder.toString();
+            System.out.println("DATA FROM report.cart FILE:");
+            System.out.println(output);
+            fr.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
