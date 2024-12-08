@@ -16,7 +16,8 @@ public class Main {
     public static void main(String[] args) {
 //        task1();
 //        task2();
-        task3();
+//        task3();
+        task4();
     }
 
     public static void task1(){
@@ -117,6 +118,25 @@ public class Main {
         System.out.println("==========TASK 3==========");
         CopyPaster cp = new CopyPaster("sticker.webp");
         cp.copyTo("sticker-copy.webp");
+        System.out.println();
+    }
+
+    public static void task4(){
+        System.out.println("==========TASK 4==========");
+
+        try {
+            RandomAccessFile r = new RandomAccessFile("report.cart", "rw");
+            r.seek(0);
+            r.writeBytes("START\n");
+            r.seek(r.length() / 2);
+            r.writeBytes("MIDDLE");
+            r.seek(r.length());
+            r.writeBytes("\nTHE END");
+            r.close();
+            System.out.println("Modified report.cart");
+        } catch (IOException e) {
+            e.getMessage();
+        }
         System.out.println();
     }
 }
