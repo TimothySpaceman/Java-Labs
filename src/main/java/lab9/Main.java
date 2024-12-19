@@ -1,12 +1,16 @@
 package lab9;
 
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) {
-        task1();
+    public static void main(String[] args) throws Exception {
+//        task1();
+        task2();
     }
 
     public static void task1(){
@@ -43,6 +47,76 @@ public class Main {
                 .replaceAll("Database Engineer", "Data Scientist");
         System.out.println("\nModified Titles:");
         System.out.println(modifiedTitles);
+
+        System.out.println();
+    }
+
+    public static void task2() throws Exception {
+        System.out.println("==========TASK 2==========");
+
+        Class<?> employeeClass1 = Employee.class;
+        Class<?> employeeClass2 = Class.forName("lab9.Employee");
+        Employee employee = new Employee();
+        Class<?> employeeClass3 = employee.getClass();
+        System.out.println("Class from .class: " + employeeClass1.getName());
+        System.out.println("Class from forName(): " + employeeClass2.getName());
+        System.out.println("Class from getClass(): " + employeeClass3.getName());
+        System.out.println();
+
+        System.out.println("Fields in Employee class:");
+        Field[] fields = employeeClass1.getDeclaredFields();
+        for (Field field : fields) {
+            System.out.println(field.getType() + " " + field.getName());
+        }
+        System.out.println();
+
+        System.out.println("Methods in Employee class:");
+        Method[] methods = employeeClass1.getDeclaredMethods();
+        for (Method method : methods) {
+            System.out.print(method.getReturnType() + " " + method.getName() + "(");
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            for (Class<?> paramType : parameterTypes) {
+                System.out.print(paramType.getName() + ", ");
+            }
+            System.out.println(")");
+        }
+
+        System.out.println("\nConstructors in Employee class:");
+        Constructor<?>[] constructors = employeeClass1.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
+
+            System.out.print(constructor.getName() + "(");
+            Class<?>[] parameterTypes = constructor.getParameterTypes();
+            for (Class<?> paramType : parameterTypes) {
+                System.out.print(paramType.getName() + ", ");
+            }
+            System.out.println(")");
+        }
+
+        Constructor<?> constructor = employeeClass1.getConstructor();
+        Employee newEmployee = (Employee) constructor.newInstance();
+        System.out.println("\nNew Employee instance created using reflection:");
+        newEmployee.displayInfo();
+
+        Method updateAgeMethod = employeeClass1.getDeclaredMethod("updateAge", int.class);
+        updateAgeMethod.invoke(newEmployee, 25);
+        System.out.println("\nAfter updating age:");
+        newEmployee.displayInfo();
+
+        Field fullNameField = employeeClass1.getDeclaredField("fullName");
+        fullNameField.setAccessible(true);  // Access the private field
+        System.out.println("\nPrivate field 'fullName' before setting:");
+        System.out.println(fullNameField.get(newEmployee));
+
+        fullNameField.set(newEmployee, "Changed Full Name");
+        System.out.println("\nPrivate field 'fullName' after setting:");
+        System.out.println(fullNameField.get(newEmployee));
+
+        Method setFullNameMethod = employeeClass1.getDeclaredMethod("setFullName", String.class);
+        setFullNameMethod.setAccessible(true);
+        setFullNameMethod.invoke(newEmployee, "Changed Full Name by Method");
+        System.out.println("\nAfter invoking private method:");
+        newEmployee.displayInfo();
 
         System.out.println();
     }
