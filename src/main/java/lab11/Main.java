@@ -16,6 +16,8 @@ public class Main {
         fetchAndDisplayProducts();
         addMoreProducts();
         fetchProductsByCategoryOrBrand("Laptops", "Lenovo");
+        performTransactionWithSavepoint();
+        fetchAndDisplayProducts();
         deleteAllRecords();
     }
 
@@ -141,6 +143,47 @@ public class Main {
             System.out.println(rowsAffected + " records deleted from the table \"products\"");
         } catch (SQLException e) {
             System.out.println("Error while deleting records");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void performTransactionWithSavepoint() {
+        String insertStatement = "INSERT INTO products (name, brand, category, price) VALUES (?, ?, ?, ?)";
+        String insertStatementInvalid = "INSERT INTO products (name, brand, category price) VALUES (?, ?, ?, ?)";
+        Random r = new Random();
+
+        try {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt1 = conn.prepareStatement(insertStatement);
+                 PreparedStatement pstmt2 = conn.prepareStatement(insertStatementInvalid)) {
+
+                pstmt1.setString(1, "Transactional Product 1");
+                pstmt1.setString(2, brands[r.nextInt(brands.length)]);
+                pstmt1.setString(3, categories[r.nextInt(categories.length)]);
+                pstmt1.setBigDecimal(4, new BigDecimal(50.00));
+                pstmt1.executeUpdate();
+                System.out.println("First product added successfully");
+
+                Savepoint savepoint = conn.setSavepoint("SavepointAfterFirstProduct");
+                System.out.println("Savepoint created");
+
+                pstmt2.setString(1, "Transactional Product 2");
+                pstmt1.setString(2, brands[r.nextInt(brands.length)]);
+                pstmt1.setString(3, categories[r.nextInt(categories.length)]);
+                pstmt2.setBigDecimal(4, new BigDecimal(60.00));
+                pstmt2.executeUpdate();
+                System.out.println("Second product added successfully");
+
+                conn.commit();
+            } catch (SQLException e) {
+                System.out.println("Error while performing transaction.");
+                System.out.println(e.getMessage());
+                conn.rollback();
+                System.out.println("Rolled back to savepoint");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while performing transaction");
             System.out.println(e.getMessage());
         }
     }
