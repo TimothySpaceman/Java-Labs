@@ -2,10 +2,12 @@ package lab7;
 
 public class Main {
     public static void main(String[] args) {
+        // DO NOT RUN MULTIPLE TASKS
 //        task1();
 //        task2();
 //        task3();
-        task4();
+//        task4();
+        task5();
     }
 
     public static void task1(){
@@ -92,6 +94,19 @@ public class Main {
         t1.start();
         t2.start();
         t3.start();
+
+        System.out.println();
+    }
+
+    public static void task5(){
+        System.out.println("==========TASK 5==========");
+
+        MessageBuffer mb = new MessageBuffer();
+        Thread r = new Thread(new Reader(mb));
+        Thread p = new Thread(new Printer(mb));
+
+        r.start();
+        p.start();
 
         System.out.println();
     }
