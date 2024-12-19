@@ -4,11 +4,13 @@ public class Main {
     public static void main(String[] args) {
 //        task1();
 //        task2();
-        task3();
+//        task3();
+        task4();
     }
 
     public static void task1(){
         System.out.println("==========TASK 1==========");
+
         MyThread t1 = new MyThread();
         t1.printState();
         t1.start();
@@ -37,11 +39,13 @@ public class Main {
         Thread m = Thread.currentThread();
         System.out.println("Main thread name: " + m.getName());
         System.out.println("Main thread priority: " + m.getPriority());
+
         System.out.println();
     }
 
     public static void task2(){
         System.out.println("==========TASK 2==========");
+
         Thread t1 = new Thread(new MyRunnable());
         Thread t2 = new Thread(new MyRunnable());
         Thread t3 = new Thread(new MyRunnable());
@@ -66,9 +70,24 @@ public class Main {
 
     public static void task3(){
         System.out.println("==========TASK 3==========");
+
         Thread t1 = new Thread(new MyRunnableArithmetic());
         Thread t2 = new Thread(new MyRunnableArithmetic());
         Thread t3 = new Thread(new MyRunnableArithmetic());
+
+        t1.start();
+        t2.start();
+        t3.start();
+
+        System.out.println();
+    }
+
+    public static void task4(){
+        System.out.println("==========TASK 4==========");
+
+        Thread t1 = new Thread(new MyRunnableArithmetic2());
+        Thread t2 = new Thread(new MyRunnableArithmetic2());
+        Thread t3 = new Thread(new MyRunnableArithmetic2());
 
         t1.start();
         t2.start();

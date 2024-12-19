@@ -6,21 +6,25 @@ public class MyRunnableArithmetic implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 100; i++) {
-            next();
-            System.out.print(result + " ");
+            if(!printAndNext()){
+                break;
+            }
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 System.out.println("An error occurred while trying to sleep in MyRunnableArithmetic");
                 System.out.println(e.getMessage());
             }
-            if(result >= 100){
-                break;
-            }
+
         }
     }
 
-    public static synchronized void next(){
+    public static synchronized boolean printAndNext(){
+        if(result > 100){
+            return false;
+        }
+        System.out.print(result + " ");
         result += 1;
+        return true;
     }
 }
