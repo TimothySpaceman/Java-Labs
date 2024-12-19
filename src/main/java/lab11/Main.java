@@ -19,6 +19,25 @@ public class Main {
         performTransactionWithSavepoint();
         fetchAndDisplayProducts();
         deleteAllRecords();
+
+        ProductDAO productDAO = new ProductDAO(conn);
+
+        Product product1 = new Product("ThinkPad", "Lenovo", "Laptops", new BigDecimal(1500.00));
+        Product product2 = new Product("Pixel", "Google", "Smartphones", new BigDecimal(800.00));
+
+        productDAO.create(product1);
+        productDAO.create(product2);
+
+        Product fetchedProduct = productDAO.read(product1.getId());
+        System.out.println("Fetched product: " + fetchedProduct);
+
+        product1.setPrice(new BigDecimal(1400.00));
+        productDAO.update(product1);
+
+        System.out.println("All products:");
+        productDAO.readAll().forEach(System.out::println);
+
+        productDAO.delete(product2.getId());
     }
 
     public static void setupDatabase(boolean closeConnection) {
