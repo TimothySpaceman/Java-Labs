@@ -11,7 +11,8 @@ public class Main {
     public static void main(String[] args) {
 //        task1();
 //        task2();
-        task3_4();
+//        task3_4();
+        task5();
     }
 
     public static void task1(){
@@ -147,6 +148,21 @@ public class Main {
         products.stream()
                 .sorted(Comparator.comparingDouble(Product::getPrice))
                 .forEach(System.out::println);
+        System.out.println();
+    }
+
+    public static void task5(){
+        System.out.println("==========TASK 5==========");
+
+        Integer[] numbers = {4, 8, 16, 2, 37};
+
+        String result = Arrays.stream(numbers)
+                .max(Integer::compareTo)
+                .map(String::valueOf)
+                .orElse("No numbers provided");
+
+        System.out.println("Max: " + result);
+
         System.out.println();
     }
 }
