@@ -3,7 +3,8 @@ package lab7;
 public class Main {
     public static void main(String[] args) {
 //        task1();
-        task2();
+//        task2();
+        task3();
     }
 
     public static void task1(){
@@ -59,6 +60,19 @@ public class Main {
         t1.interrupt();
         t2.interrupt();
         t3.interrupt();
+
+        System.out.println();
+    }
+
+    public static void task3(){
+        System.out.println("==========TASK 3==========");
+        Thread t1 = new Thread(new MyRunnableArithmetic());
+        Thread t2 = new Thread(new MyRunnableArithmetic());
+        Thread t3 = new Thread(new MyRunnableArithmetic());
+
+        t1.start();
+        t2.start();
+        t3.start();
 
         System.out.println();
     }
