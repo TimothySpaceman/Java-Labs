@@ -1,14 +1,17 @@
 package lab8;
 
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
 //        task1();
-        task2();
+//        task2();
+        task3();
     }
 
     public static void task1(){
@@ -67,6 +70,86 @@ public class Main {
         };
         System.out.println("Product: " + stringToProduct.apply("1 5 3 2 7"));
 
+        System.out.println();
+    }
+
+    public static void task3(){
+        System.out.println("==========TASK 3==========");
+
+        class Product {
+            private String name;
+            private String brand;
+            private double price;
+            private int count;
+
+            public Product(String name, String brand, double price, int count) {
+                this.name = name;
+                this.brand = brand;
+                this.price = price;
+                this.count = count;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public String getBrand() {
+                return brand;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public int getCount() {
+                return count;
+            }
+
+            @Override
+            public String toString() {
+                return name + " by " + brand + " with price " + price + " (" + count + " pcs)";
+            }
+        }
+
+        List<Product> products = new ArrayList<Product>() {
+            {
+                add(new Product("ThinkPad smth", "Lenovo", 1200, 10));
+                add(new Product("Pixel", "Google", 800, 15));
+                add(new Product("Surface", "Microsoft", 1500, 5));
+                add(new Product("IdeaPad smth", "Lenovo", 700, 20));
+                add(new Product("ChromeBook smth", "Google", 650, 50));
+            }
+        };
+
+        System.out.println("All brands: ");
+        products.stream()
+                .map(Product::getBrand)
+                .distinct()
+                .forEach(System.out::println);
+
+        System.out.println("\nProducts cheaper than 1000:");
+        products.stream()
+                .filter(product -> product.getPrice() < 1000)
+                .limit(2)
+                .forEach(System.out::println);
+
+        int totalAmount = products.stream()
+                .map(Product::getCount)
+                .reduce(0, Integer::sum);
+        System.out.println("\nTotal amount: " + totalAmount);
+
+        System.out.println("\nProducts by brand:");
+        Map<String, List<Product>> productsByBrand = products.stream()
+                .collect(Collectors.groupingBy(Product::getBrand));
+        productsByBrand.forEach((brand, productList) -> {
+            System.out.println(brand + ": " + productList);
+        });
+
+        System.out.println("\nProducts by price:");
+        List<Product> sortedByPrice = products.stream()
+                .sorted(Comparator.comparingDouble(Product::getPrice))
+                .collect(Collectors.toList());
+        sortedByPrice.forEach(System.out::println);
         System.out.println();
     }
 }
