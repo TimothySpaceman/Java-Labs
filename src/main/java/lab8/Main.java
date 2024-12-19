@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 //        task1();
 //        task2();
-        task3();
+        task3_4();
     }
 
     public static void task1(){
@@ -73,8 +73,8 @@ public class Main {
         System.out.println();
     }
 
-    public static void task3(){
-        System.out.println("==========TASK 3==========");
+    public static void task3_4(){
+        System.out.println("=========TASK 3,4=========");
 
         class Product {
             private String name;
@@ -139,17 +139,14 @@ public class Main {
         System.out.println("\nTotal amount: " + totalAmount);
 
         System.out.println("\nProducts by brand:");
-        Map<String, List<Product>> productsByBrand = products.stream()
-                .collect(Collectors.groupingBy(Product::getBrand));
-        productsByBrand.forEach((brand, productList) -> {
-            System.out.println(brand + ": " + productList);
-        });
+        products.stream()
+                .collect(Collectors.groupingBy(Product::getBrand))
+                .forEach((brand, productList) -> System.out.println(brand + ": " + productList));
 
         System.out.println("\nProducts by price:");
-        List<Product> sortedByPrice = products.stream()
+        products.stream()
                 .sorted(Comparator.comparingDouble(Product::getPrice))
-                .collect(Collectors.toList());
-        sortedByPrice.forEach(System.out::println);
+                .forEach(System.out::println);
         System.out.println();
     }
 }
