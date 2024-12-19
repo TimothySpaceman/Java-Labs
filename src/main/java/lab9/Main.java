@@ -1,16 +1,31 @@
 package lab9;
 
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface Info {
+    String author() default "Unknown";
+    String date() default "Not Set";
+    int version() default 1;
+}
+
 public class Main {
+    @Info(author = "Timothy", date = "19.12.2024", version = 3)
     public static void main(String[] args) throws Exception {
 //        task1();
-        task2();
+//        task2();
+        task3();
     }
 
     public static void task1(){
@@ -117,6 +132,25 @@ public class Main {
         setFullNameMethod.invoke(newEmployee, "Changed Full Name by Method");
         System.out.println("\nAfter invoking private method:");
         newEmployee.displayInfo();
+
+        System.out.println();
+    }
+
+    @Info(author = "Timothy", date = "19.12.2024", version = 1)
+    public static void task3() {
+        System.out.println("==========TASK 3==========");
+
+        Arrays.stream(Main.class.getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(Info.class))
+                .forEach(method -> {
+                    Info info = method.getAnnotation(Info.class);
+
+                    System.out.println("Method: " + method.getName());
+                    System.out.println("Author: " + info.author());
+                    System.out.println("Date: " + info.date());
+                    System.out.println("Version: " + info.version());
+                    System.out.println();
+                });
 
         System.out.println();
     }
