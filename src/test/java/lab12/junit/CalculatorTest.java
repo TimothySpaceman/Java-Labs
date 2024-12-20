@@ -1,7 +1,8 @@
-package lab12;
+package lab12.junit;
 
 import static org.junit.Assert.*;
 
+import lab12.Calculator;
 import org.junit.*;
 import org.junit.rules.*;
 

@@ -1,5 +1,6 @@
-package lab12;
+package lab12.junit;
 
+import lab12.Calculator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
